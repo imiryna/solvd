@@ -1,59 +1,201 @@
 /*
+The plus method 
 file contains functions arithmetic operations on strings
 without relying on bigint or arithmetic libraries.
 Each function validate its input parameters for possibility
 to be cast to number.
-*/
+
+ */
 
 String.prototype.plus = function (n) {
-  let v2 = Number(n);
-  let v1 = Number(this.toString());
-  if (isNaN(v1) || isNaN(v2)) {
-    // isNaN converts the value to a number before testing it.
-    throw new Error("Parameter is not a number!");
+  let value1 = this.toString().split("").reverse();
+  let value2 = n.split("").reverse();
+
+  const longest = value1.length < value2.length ? value2.length : value1.length;
+  let leftover = 0;
+  let result = [];
+
+  for (let i = 0; i < longest; i++) {
+    let digit1 = Number(value1[i] || "0");
+    let digit2 = Number(value2[i] || "0");
+
+    if (isNaN(digit1) || isNaN(digit2)) {
+      throw new Error(`Parameter on position ${longest - i} is not a number!`);
+    }
+
+    let sum = digit1 + digit2 + leftover;
+    result.push((sum % 10).toString());
+    if (sum > 9) {
+      sumString = sum.toString();
+      leftover = Number(sumString[0]);
+    } else {
+      leftover = 0;
+    }
   }
-  const result = v1 + v2; // actual arithmetic operation
-  return result.toString(); // convert result back to string
+  return result.reverse().join("");
 };
+
+/** The minus method  */
 
 String.prototype.minus = function (n) {
-  let v2 = Number(n);
-  let v1 = Number(this.toString());
-  if (isNaN(v1) || isNaN(v2)) {
-    throw new Error("Parameter is not a number!");
+  //assume value1 >= value2
+  let value1 = this.toString().split("").reverse();
+  let value2 = n.split("").reverse();
+  let result = [];
+  let borrow = 0;
+
+  for (let i = 0; i < value1.length; i++) {
+    let digit1 = Number(value1[i] || "0");
+    let digit2 = Number(value2[i] || "0");
+
+    if (isNaN(digit1) || isNaN(digit2)) {
+      throw new Error(`Parameter on position ${value1.length - i} is not a number!`);
+    }
+    let diff = digit1 - digit2 - borrow;
+    if (diff < 0) {
+      diff += 10;
+      borrow = 1;
+    } else {
+      borrow = 0;
+    }
+    result.push(diff.toString());
   }
-  const result = v1 - v2;
-  return result.toString();
+  return removeLeadingZeros(result.reverse().join(""));
 };
 
-String.prototype.divide = function (n) {
-  let v2 = Number(n);
-  let v1 = Number(this.toString());
-  if (isNaN(v1) || isNaN(v2)) {
-    throw new Error("Parameter is not a number!");
+// remove leading zeros(we need it to remove zeros thet we place in minus function for shorter number)
+
+function removeLeadingZeros(str) {
+  return str.replace(/^0+/, "") || "0";
+}
+
+/** The divide method  */
+
+String.prototype.divide = function (div) {
+  let divisor = div;
+  let dividend = this.toString();
+  let result = "";
+  let divisorLength = divisor.length;
+
+  //check input not empty
+  if (divisor.length === 0 || dividend.length === 0) {
+    throw new Error("Input cant be empty.");
   }
-  const result = v1 / v2;
-  return result.toString();
+
+  if (divisor == "1") return dividend;
+  if (divisor == "0") throw new Error("Division by Zero!");
+
+  // cut partial dividend from dividend starting from length of divisior and
+  // then step digit by digit till the end of dividend
+  let caret = divisorLength;
+  let remainder = 0;
+  let res = "";
+  let partialDividend = dividend.slice(0, caret - 1);
+
+  while (caret <= dividend.length) {
+    // Append one more digit to the partial dividend
+    partialDividend += dividend.slice(caret - 1, caret);
+    if (compare(partialDividend, divisor) < 0) {
+      // we cannot divide partial divident by divisor
+      // need to take one more digit from dividend
+
+      caret += 1;
+    } else {
+      // as we cannot divided we'are looking fo
+      [res, remainder] = resultDigit(partialDividend, divisor);
+      result += res;
+      partialDividend = remainder;
+      caret += 1;
+    }
+  }
+  // Return result + remainder (e.g., "123R5" = 123 remainder 5)
+  return `${result}R${remainder}`;
 };
+
+//compare two integers
+function compare(n, k) {
+  if (n.length > k.length) return 1;
+  if (n.length < k.length) return -1;
+
+  for (let i = 0; i < n.length; i++) {
+    if (Number(n[i]) > Number(k[i])) return 1;
+    if (Number(n[i]) < Number(k[i])) return -1;
+  }
+  return 0;
+}
+
+// find partial dividend(find smollest number fron first digits thet can be divided by divisior)
+// find A - amount of dividers thet can fit into  partial dividend.
+// find substraction between partial dividend and A* divisior
+function resultDigit(partialDiv, divisor) {
+  let count = 0;
+  while (compare(partialDiv, divisor) >= 0) {
+    partialDiv = partialDiv.minus(divisor);
+    count++;
+  }
+  return [count.toString(), partialDiv];
+}
+
+// try {
+//   //const s1 = s.divide('123');
+//   console.log("345623".divide("323234"));
+// } catch (e) {
+//   console.log(e);
+// }
+
+/** The multiply method uses the Karatsuba algorithm */
 
 String.prototype.multiply = function (n) {
-  let v2 = Number(n);
-  let v1 = Number(this.toString());
-  if (isNaN(v1) || isNaN(v2)) {
-    throw new Error("Parameter is not a number!");
-  }
-  const result = v1 * v2;
-  return result.toString();
+  return karatsuba(this.toString(), n);
 };
 
-/* testing of a function
+function karatsuba(n1, n2) {
+  if (n1.length == 1 || n2.length == 1) {
+    return (Number(n1) * Number(n2)).toString();
+  }
 
-const s2 = "123";
-try {
-  let s3 = s2.multiply("4");
-  console.log(s3);
-  console.log(typeof s3);
-} catch (e) {
-  console.log(e);
+  // Calculates the size of the numbers.
+  const maxLength = n1.length > n2.length ? n1.length : n2.length;
+  let halfLength = 0;
+
+  // Check if remainder existed.
+  if (maxLength % 2 !== 0) {
+    halfLength = maxLength / 2 - 0.5;
+  } else {
+    halfLength = maxLength / 2;
+  }
+
+  // Split the digit sequences in the middle.
+  const high1 = n1.slice(0, maxLength - halfLength);
+  const low1 = n1.slice(maxLength - halfLength);
+
+  const high2 = n2.slice(0, maxLength - halfLength);
+  const low2 = n2.slice(maxLength - halfLength);
+
+  // 3 recursive calls made to numbers approximately half the size.
+  const z0 = karatsuba(low1, low2);
+  const z1 = karatsuba(low1.plus(high1), low2.plus(high2));
+  const z2 = karatsuba(high1, high2);
+
+  //  original formula (z2 × 10 ^ (m2 × 2)) + ((z1 - z2 - z0) × 10 ^ m2) + z0
+  const part1 = z2 + pow10(halfLength * 2);
+  const part2 = z1.minus(z2).minus(z0) + pow10(halfLength);
+
+  return part1.plus(part2).plus(z0);
 }
-*/
+
+// exponentiation function
+function pow10(x) {
+  return "0".repeat(x);
+}
+
+/* testing of a function*/
+
+// const s2 = "123";
+// try {
+//   let s3 = s2.multiply("30");
+//   console.log(s3);
+//   console.log(typeof s3);
+// } catch (e) {
+//   console.log(e);
+// }
