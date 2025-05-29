@@ -82,8 +82,17 @@ String.prototype.divide = function (div) {
     throw new Error("Input cant be empty.");
   }
 
-  if (divisor == "1") return dividend;
-  if (divisor == "0") throw new Error("Division by Zero!");
+  if (divisor.length > dividend.length) return "0";
+
+  if (!/^\d+$/.test(dividend) || !/^\d+$/.test(divisor)) {
+    throw new Error("One of the parameters is not a valid number string.");
+  }
+
+  if (divisor === "1") return dividend;
+  if (dividend === "0") return "0";
+  if (divisor === "0") throw new Error("Division by Zero!");
+
+  if (dividend.length <= 4 && divisor.length <= 4) return (result = (Number(dividend) / Number(divisor)).toString());
 
   // cut partial dividend from dividend starting from length of divisior and
   // then step digit by digit till the end of dividend
@@ -98,18 +107,19 @@ String.prototype.divide = function (div) {
     if (compare(partialDividend, divisor) < 0) {
       // we cannot divide partial divident by divisor
       // need to take one more digit from dividend
-
-      caret += 1;
+      result += partialDividend === "0" ? "0" : "";
+      partialDividend = partialDividend === "0" ? "" : partialDividend;
     } else {
       // as we cannot divided we'are looking fo
       [res, remainder] = resultDigit(partialDividend, divisor);
       result += res;
-      partialDividend = remainder;
-      caret += 1;
+      partialDividend = remainder === "0" ? "" : remainder;
     }
+    caret += 1;
   }
+
   // Return result + remainder (e.g., "123R5" = 123 remainder 5)
-  return `${result}R${remainder}`;
+  return result;
 };
 
 //compare two integers
@@ -135,13 +145,6 @@ function resultDigit(partialDiv, divisor) {
   }
   return [count.toString(), partialDiv];
 }
-
-// try {
-//   //const s1 = s.divide('123');
-//   console.log("345623".divide("323234"));
-// } catch (e) {
-//   console.log(e);
-// }
 
 /** The multiply method uses the Karatsuba algorithm */
 
@@ -191,11 +194,11 @@ function pow10(x) {
 
 /* testing of a function*/
 
-// const s2 = "123";
-// try {
-//   let s3 = s2.multiply("30");
-//   console.log(s3);
-//   console.log(typeof s3);
-// } catch (e) {
-//   console.log(e);
-// }
+const s2 = "100";
+try {
+  let s3 = s2.divide("99999999999");
+  console.log(s3);
+  console.log(typeof s3);
+} catch (e) {
+  console.log(e);
+}
