@@ -73,8 +73,8 @@ function removeLeadingZeros(str) {
 
 String.prototype.divide = function (div) {
   //local variables
-  let divisor = div;
-  let dividend = this.toString();
+  let divisor = removeLeadingZeros(div);
+  let dividend = removeLeadingZeros(this.toString());
   let result = "";
   let divisorLength = divisor.length;
 
@@ -109,22 +109,16 @@ String.prototype.divide = function (div) {
     partialDividend += dividend.slice(caret - 1, caret);
     partialDividend = removeLeadingZeros(partialDividend);
 
-    if (compare(partialDividend, divisor) < 0) {
-      // we cannot divide partial divident by divisor
-      // need to take one more digit from dividend
-      result += remainder; //=== "0" ? "0" : "";
-      // partialDividend = partialDividend === "0" ? "" : partialDividend;
-    } else {
-      // as we cannot divided we'are looking fo
-      [res, remainder] = resultDigit(partialDividend, divisor);
-      result += res;
-      partialDividend = remainder; //=== "0" ? "" : remainder;
-    }
+    // try ti divide partialDivident by divisor
+    [res, remainder] = resultDigit(partialDividend, divisor);
+    result += res;
+    partialDividend = remainder;
+
     caret += 1;
   }
 
-  // Return result + remainder (e.g., "123R5" = 123 remainder 5)
-  return result;
+  // Return result
+  return removeLeadingZeros(result);
 };
 
 //compare two integers
@@ -199,9 +193,9 @@ function pow10(x) {
 
 /* testing of a function*/
 
-const s2 = "99999999999999999999";
+const s2 = "0000123";
 try {
-  let s3 = s2.divide("9999999");
+  let s3 = s2.divide("0003");
   console.log(s3);
   console.log(typeof s3);
 } catch (e) {
