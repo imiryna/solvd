@@ -72,25 +72,28 @@ function removeLeadingZeros(str) {
 /** The divide method  */
 
 String.prototype.divide = function (div) {
+  //local variables
   let divisor = div;
   let dividend = this.toString();
   let result = "";
   let divisorLength = divisor.length;
 
-  //check input not empty
+  //check wrong inputs and edge cases
+
   if (divisor.length === 0 || dividend.length === 0) {
     throw new Error("Input cant be empty.");
   }
-
-  if (divisor.length > dividend.length) return "0";
 
   if (!/^\d+$/.test(dividend) || !/^\d+$/.test(divisor)) {
     throw new Error("One of the parameters is not a valid number string.");
   }
 
+  if (divisor === "0") throw new Error("Division by Zero!");
+
+  if (divisor.length > dividend.length) return "0";
+
   if (divisor === "1") return dividend;
   if (dividend === "0") return "0";
-  if (divisor === "0") throw new Error("Division by Zero!");
 
   if (dividend.length <= 4 && divisor.length <= 4) return (result = (Number(dividend) / Number(divisor)).toString());
 
@@ -104,16 +107,18 @@ String.prototype.divide = function (div) {
   while (caret <= dividend.length) {
     // Append one more digit to the partial dividend
     partialDividend += dividend.slice(caret - 1, caret);
+    partialDividend = removeLeadingZeros(partialDividend);
+
     if (compare(partialDividend, divisor) < 0) {
       // we cannot divide partial divident by divisor
       // need to take one more digit from dividend
-      result += partialDividend === "0" ? "0" : "";
-      partialDividend = partialDividend === "0" ? "" : partialDividend;
+      result += remainder; //=== "0" ? "0" : "";
+      // partialDividend = partialDividend === "0" ? "" : partialDividend;
     } else {
       // as we cannot divided we'are looking fo
       [res, remainder] = resultDigit(partialDividend, divisor);
       result += res;
-      partialDividend = remainder === "0" ? "" : remainder;
+      partialDividend = remainder; //=== "0" ? "" : remainder;
     }
     caret += 1;
   }
@@ -194,9 +199,9 @@ function pow10(x) {
 
 /* testing of a function*/
 
-const s2 = "100";
+const s2 = "99999999999999999999";
 try {
-  let s3 = s2.divide("99999999999");
+  let s3 = s2.divide("9999999");
   console.log(s3);
   console.log(typeof s3);
 } catch (e) {
