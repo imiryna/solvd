@@ -193,11 +193,11 @@ function pow10(x) {
 
 /* testing of a function*/
 
-const s2 = "0000123";
-try {
-  let s3 = s2.divide("0003");
-  console.log(s3);
-  console.log(typeof s3);
-} catch (e) {
-  console.log(e);
-}
+// const s2 = "0000123";
+// try {
+//   let s3 = s2.divide("0003");
+//   console.log(s3);
+//   console.log(typeof s3);
+// } catch (e) {
+//   console.log(e);
+// }
