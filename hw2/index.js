@@ -11,7 +11,6 @@ If the addition is not possible, it should throw an error. */
 // 3. performs the appropriate addition operation based on the types of the arguments.
 
 function addValues(par1, par2) {
-  
   if (typeof par1 === "string" || typeof par2 === "string") return String(par1) + String(par2);
 
   //hendel of error
@@ -25,13 +24,13 @@ function addValues(par1, par2) {
 
   // performs the appropriate addition
 
-  //Numbers 
+  //Numbers
   if (typeof par1 === "number" && typeof par2 === "number") return arg1 + par2;
 
   // BigInts
   if (typeof par1 === "bigint" && typeof par2 === "bigint") {
     return par1 + par2;
-}
+  }
 
   // Arrays
   if (Array.isArray(par1) && Array.isArray(par2)) return [...par1, ...par2];
@@ -48,19 +47,19 @@ For other types, use the appropriate built-in methods or operations to convert t
 
 function stringifyValue(arg) {
   const argTypeOf = typeof arg;
-  const result = null;
+  let result = null;
 
   switch (argTypeOf) {
-    case "string":
+    case "boolean":
       argTypeOf;
       break;
     case "number":
-      result = ;
-    case "Papayas":
-      console.log("Mangoes and papayas are $2.79 a pound.");
-      // Expected output: "Mangoes and papayas are $2.79 a pound."
+      result = argTypeOf.toString();
+      break;
+    case "bigInt":
+      result = argTypeOf.toString();
       break;
     default:
-      console.log(`Sorry, we are out of ${expr}.`);
+      argTypeOf;
   }
 }
