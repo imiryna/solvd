@@ -11,18 +11,56 @@ If the addition is not possible, it should throw an error. */
 // 3. performs the appropriate addition operation based on the types of the arguments.
 
 function addValues(par1, par2) {
-  const arg1 = typeof par1;
-  const arg2 = typeof par2;
+  
+  if (typeof par1 === "string" || typeof par2 === "string") return String(par1) + String(par2);
 
   //hendel of error
-  //  check arg1 === 'object' && arg1 !== null
+  if (arg1 === null || arg2 === null) {
+    throw new Error("One of the arguments is null");
+  }
+
+  if (typeof par1 !== typeof par2) {
+    throw new Error("Invalid data types for addition.");
+  }
 
   // performs the appropriate addition
-  if (arg1 === "string" || arg2 === "string") return String(arg1) + String(arg2);
 
-  if (arg1 === "number" && arg2 === "number") return arg1 + arg2;
+  //Numbers 
+  if (typeof par1 === "number" && typeof par2 === "number") return arg1 + par2;
 
-  if (Array.isArray(arg1) && Array.isArray(arg2)) return [...arg1, ...arg2];
+  // BigInts
+  if (typeof par1 === "bigint" && typeof par2 === "bigint") {
+    return par1 + par2;
+}
 
-  if (arg1 === "object" && arg2 === "object") return { ...arg1, ...arg2 };
+  // Arrays
+  if (Array.isArray(par1) && Array.isArray(par2)) return [...par1, ...par2];
+
+  // Objects
+  if (typeof par1 === "object" && typeof par2 === "object") return { ...par1, ...par2 };
+}
+
+/* 
+stringifyValue: Accepts a single argument of any type and converts it to a string representation.
+For objects and arrays, use JSON.stringify() for serialization. 
+For other types, use the appropriate built-in methods or operations to convert them to strings. 
+*/
+
+function stringifyValue(arg) {
+  const argTypeOf = typeof arg;
+  const result = null;
+
+  switch (argTypeOf) {
+    case "string":
+      argTypeOf;
+      break;
+    case "number":
+      result = ;
+    case "Papayas":
+      console.log("Mangoes and papayas are $2.79 a pound.");
+      // Expected output: "Mangoes and papayas are $2.79 a pound."
+      break;
+    default:
+      console.log(`Sorry, we are out of ${expr}.`);
+  }
 }
