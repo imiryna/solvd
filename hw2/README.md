@@ -4,14 +4,14 @@ JavaScript library that provides advanced data transformation functions.
 
 ## Installation
 
-npm install
+sudo npm link
 
 ## Usage
 
 ## ES Modules
 
 ```js
-import { addValues, coerceType, invertBool, stringifyValue, convertToNumber, extendStringPrototype } from "your-lib-name";
+import { addValues, coerceType, invertBool, stringifyValue, convertToNumber, extendStringPrototype } from "hw2_lib";
 ```
 
 `extendStringPrototype(); // this enables String.prototype format`
@@ -19,7 +19,7 @@ import { addValues, coerceType, invertBool, stringifyValue, convertToNumber, ext
 ## CommonJS
 
 ```js
-const { addValues, coerceType, invertBool, stringifyValue, convertToNumber, extendStringPrototype } = require("your-lib-name");
+const { addValues, coerceType, invertBool, stringifyValue, convertToNumber, extendStringPrototype } = require("hw2_libe");
 ```
 
 `extendStringPrototype(); // this enables String.prototype format`
