@@ -11,26 +11,27 @@ If the addition is not possible, it should throw an error. */
 // 3. performs the appropriate addition operation based on the types of the arguments.
 
 function addValues(par1, par2) {
+  const type1 = typeof par1;
+  const type2 = typeof par2;
+
   //handle of error
   if (par1 === null || par1 === null) {
     throw new Error("One of the arguments is null");
   }
 
   // Strings
-  if (typeof par1 === "string" || typeof par2 === "string") return String(par1) + String(par2);
+  if (type1 === "string" || type2 === "string") return String(par1) + String(par2);
 
   // //handle of type error
-  if (typeof par1 !== typeof par2) {
+  if (type1 !== type2) {
     throw new Error("Invalid data types for addition.");
   }
 
   // performs the appropriate addition
+  //Numbers, BigInts, Boolean
+  const primitiveTypes = ["number", "bigint", "boolean"];
 
-  //Numbers
-  if (typeof par1 === "number" && typeof par2 === "number") return par1 + par2;
-
-  // BigInts
-  if (typeof par1 === "bigint" && typeof par2 === "bigint") {
+  if (primitiveTypes.includes(type1)) {
     return par1 + par2;
   }
 
@@ -86,13 +87,11 @@ function stringifyValue(arg) {
   */
 
 function invertBoolean(arg) {
-  const bool = arg;
-
   if (typeof arg !== "boolean") {
     throw new Error("The argument is not a boolean");
   }
 
-  return !bool;
+  return !arg;
 }
 
 /* 
