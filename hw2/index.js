@@ -24,14 +24,14 @@ const testCases = [
   [10n, 5],
 ];
 
-testCases.forEach(([a, b], i) => {
-  try {
-    const result = addValues(a, b);
-    console.log(`✅ Test ${i + 1}:`, result);
-  } catch (e) {
-    console.log(`❌ Test ${i + 1}: Error - ${e.message}`);
-  }
-});
+// testCases.forEach(([a, b], i) => {
+//   try {
+//     const result = addValues(a, b);
+//     console.log(`✅ Test ${i + 1}:`, result);
+//   } catch (e) {
+//     console.log(`❌ Test ${i + 1}: Error - ${e.message}`);
+//   }
+// });
 
 // test cases for coerceToType
 // const testCases = [
