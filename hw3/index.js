@@ -9,9 +9,11 @@ without modifying the original products.*/
 // 1. check params if Number used 'convertToNumber'
 // 2. throu error
 const itemsPrice = [
-  { item: "rtrtr", price: 29 },
-  { item: "rfgf", price: 24 },
+  { item: "Laptop", price: 1000 },
+  { item: "Phone", price: 500 },
+  { item: "Tablet", price: 300 },
 ];
+
 function calculateDiscountedPrice(itemsPrice, discount) {
   // we suppose the itemsPrice is an array of objects with filds: item, price
 
@@ -23,10 +25,16 @@ function calculateDiscountedPrice(itemsPrice, discount) {
   return discountedPriceItems;
 }
 
+console.log(calculateDiscountedPrice(itemsPrice, 10));
+
 /*
 Create a pure function called `calculateTotalPrice` that takes an array of products as an argument. 
 The function should return the total price of all products, 
 without modifying the original array or its items.*/
 
-function calculateTotalPrice() {}
-console.log(calculateDiscountedPrice(itemsPrice, 10));
+function calculateTotalPrice(itemsPrice) {
+  // Array.reduce() return total price without modify 'itemsPrice'
+  const totalPrice = itemsPrice.reduce((accumulator, product) => accumulator + product.price, 0);
+
+  return totalPrice;
+}
