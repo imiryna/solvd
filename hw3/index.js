@@ -67,22 +67,49 @@ sorted in alphabetical order, without using explicit loops.
 Use function composition and point-free style.
  */
 
-// 1. to split strineg
-// 2. .join(', ') in an array
-
 const st = "qwt reyt ewy twet yw qwt reyt ewy";
 
+// get text return array split by space
 const splitStr = (text) => text.split(" ");
 
+// filter out duplecate
 const uniqueElem = (arr) => [...new Set(arr)];
 
+// sort them
 const alphabeticalOrder = (arr) => arr.toSorted();
 
+// felper function for compose functions
 const compose =
   (...fns) =>
   (x) =>
     fns.reduce((v, f) => f(v), x);
 
+// function composition
 const filterUniqueWords = compose(splitStr, uniqueElem, alphabeticalOrder);
 
 console.log(filterUniqueWords(st));
+
+/* 
+Implement a function called 'getAverageGrade' that takes an array of student objects, 
+each containing a 'name' and 'grades' property. 
+The function should return the average grade of all students, without modifying the original array or its items. 
+Use function composition and point-free style.
+*/
+
+const students = [
+  { name: "Alice", grades: [85, 92, 78] },
+  { name: "Bob", grades: [90, 88, 95] },
+  { name: "Charlie", grades: [70, 75, 80] },
+  { name: "Diana", grades: [95, 98, 94] },
+  { name: "Ethan", grades: [60, 65, 70] },
+];
+
+const allGrades = (arr) => arr.reduce((acc, el) => [...acc, ...el.grades], []);
+
+const average = (arr) => arr.reduce((acc, el) => acc + el, 0) / arr.length;
+
+const getAverageGrade = compose(allGrades, average);
+
+console.log(getAverageGrade(students));
+
+//  Closures and Higher-Order Functions
