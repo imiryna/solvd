@@ -38,3 +38,51 @@ function calculateTotalPrice(itemsPrice) {
 
   return totalPrice;
 }
+
+//  Function Composition and Point-Free Style
+
+/* Implement a function called 'getFullName' that takes a person object with 'firstName' and 'lastName' properties. 
+The function should return the person's full name in the format "FirstName LastName". */
+
+const persons = [
+  {
+    firstName: "Bob",
+    lastName: "Json",
+  },
+  {
+    firstName: "Bill",
+    lastName: "Smith",
+  },
+];
+
+const getFullName = (person) => `${person.firstName} ${person.lastName}`;
+
+// Exemple of using Point-free style
+
+console.log(persons.map(getFullName));
+
+/*
+Create a function called 'filterUniqueWords' that takes a string of text and returns an array of unique words, 
+sorted in alphabetical order, without using explicit loops. 
+Use function composition and point-free style.
+ */
+
+// 1. to split strineg
+// 2. .join(', ') in an array
+
+const st = "qwt reyt ewy twet yw qwt reyt ewy";
+
+const splitStr = (text) => text.split(" ");
+
+const uniqueElem = (arr) => [...new Set(arr)];
+
+const alphabeticalOrder = (arr) => arr.toSorted();
+
+const compose =
+  (...fns) =>
+  (x) =>
+    fns.reduce((v, f) => f(v), x);
+
+const filterUniqueWords = compose(splitStr, uniqueElem, alphabeticalOrder);
+
+console.log(filterUniqueWords(st));
