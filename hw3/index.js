@@ -113,3 +113,40 @@ const getAverageGrade = compose(allGrades, average);
 console.log(getAverageGrade(students));
 
 //  Closures and Higher-Order Functions
+
+/*
+Create a function called 'createCounter' that returns a closure. 
+The closure should be a counter function that increments the count on each call and returns the updated count. 
+Each closure should have its own independent count. 
+*/
+console.log("==========counter closures ===============");
+function createCounter() {
+  let counter = 0;
+
+  function counterIncrement() {
+    counter++;
+    console.log(counter);
+    return counter;
+  }
+
+  return counterIncrement;
+}
+
+const counterN1 = createCounter();
+const counterN2 = createCounter();
+
+counterN1();
+counterN1();
+counterN2();
+
+/* 
+Implement a higher-order function called 'repeatFunction' that takes a function and a number as arguments. 
+The function should return a new function that invokes the original function multiple times 
+based on the provided number. 
+If the number is negative, the new function should invoke the original function indefinitely until stopped.
+*/
+
+const repeatFunction = (fn, times) => {
+  if (times == 1) return fn;
+  return fn(repeatFunction(fn, times - 1));
+};
