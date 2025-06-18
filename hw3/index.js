@@ -87,6 +87,7 @@ const compose =
 // function composition
 const filterUniqueWords = compose(splitStr, uniqueElem, alphabeticalOrder);
 
+console.log("=========================");
 console.log(filterUniqueWords(st));
 
 /* 
@@ -147,6 +148,58 @@ If the number is negative, the new function should invoke the original function 
 */
 
 const repeatFunction = (fn, times) => {
-  if (times == 1) return fn;
-  return fn(repeatFunction(fn, times - 1));
+  return function recur(x) {
+    if (times === 1) return fn(x);
+    return fn(repeatFunction(fn, times - 1)(x));
+  };
 };
+
+const w = (x) => x * x;
+const repeatFn = repeatFunction(w, 3);
+
+console.log(repeatFn(3));
+
+//    Recursion and Tail Call Optimization
+
+/*
+Implement a recursive function called calculateFactorial that calculates the factorial of a given number. 
+Optimize the function to use tail call optimization to avoid stack overflow for large input numbers.
+*/
+
+// wrap function to reduce amount of input variables
+// end user no nothing about acc variable
+function calculateFactorial(num) {
+  // input the num for factorial and acc for storing result for each iteration
+  function factorialTco(num, acc) {
+    if (num == 0) return acc;
+
+    return factorialTco(num - 1, acc * num);
+  }
+
+  return factorialTco(num, 1);
+}
+
+console.log("=== Factorial TCO =======");
+console.log(calculateFactorial(10));
+console.log("=========================");
+
+/*
+Create a recursive function called power that takes a base and an exponent as arguments. 
+The function should calculate the power of the base to the exponent using recursion.
+*/
+function power(base, exponent) {
+  function recPower(base, exponent, acc) {
+    if (exponent === 0) return acc;
+    return recPower(base, exponent - 1, acc * base);
+  }
+  return recPower(base, exponent, 1);
+}
+console.log(power(2, 3));
+
+//   Lazy Evaluation and Generators (do not use yield)
+
+/*
+Implement a lazy evaluation function called lazyMap that takes an array and a mapping function. 
+The function should return a lazy generator that applies the mapping function 
+to each element of the array one at a time.
+*/
