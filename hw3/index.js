@@ -203,3 +203,28 @@ Implement a lazy evaluation function called lazyMap that takes an array and a 
 The function should return a lazy generator that applies the mapping function 
 to each element of the array one at a time.
 */
+
+function lazyMap(arr, mapFn) {
+  let i = 0;
+
+  return {
+    [Symbol.iterator]() {
+      return this;
+    },
+    next() {
+      if (i <= arr.length) {
+        const value = mapFn(arr[i]);
+        i++;
+        return { value, done: false };
+      } else {
+        return { done: true };
+      }
+    },
+  };
+}
+
+const it = lazyMap([2, 3], w);
+
+console.log("=== lazy evaluation =======");
+console.log(it.next());
+console.log(it.next());
