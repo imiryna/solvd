@@ -228,3 +228,46 @@ const it = lazyMap([2, 3], w);
 console.log("=== lazy evaluation =======");
 console.log(it.next());
 console.log(it.next());
+
+/*
+Create a lazy generator function called fibonacciGenerator that generates Fibonacci numbers one at a time 
+using lazy evaluation.
+*/
+
+function fibonacciGenerator() {
+  let one = null;
+  let two = null;
+
+  let value = 0;
+
+  return {
+    [Symbol.iterator]() {
+      return this;
+    },
+    next() {
+      if (one === null) {
+        value = 1;
+        one = 1;
+      } else if (two === null) {
+        value = 1;
+        two = 1;
+      } else {
+        value = one + two;
+        one = two;
+        two = value;
+      }
+
+      return { value, done: false };
+    },
+  };
+}
+
+const sequences = fibonacciGenerator();
+
+console.log("=== fibonacci =======");
+console.log(sequences.next());
+console.log(sequences.next());
+console.log(sequences.next());
+console.log(sequences.next());
+console.log(sequences.next());
+console.log(sequences.next());
