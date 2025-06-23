@@ -81,7 +81,7 @@ sorted in alphabetical order, without using explicit loops.
 Use function composition and point-free style.
  */
 
-const st = "qwt reyt ewy Ewy ,  EwY twet yw qwt reyt ewy";
+const st = "qwt reyt ewy Ewy , % EwY twet yw qwt reyt ewy";
 
 // Normalizes case and remove punctuation, and spaces
 const normalizes = (text) =>
@@ -132,6 +132,7 @@ const average = (arr) => arr.reduce((acc, el) => acc + el, 0) / arr.length;
 
 const getAverageGrade = compose(allGrades, average);
 
+console.log("========== Average Grade ===============");
 console.log(getAverageGrade(students));
 
 //  Closures and Higher-Order Functions
