@@ -17,6 +17,20 @@ const itemsPrice = [
 function calculateDiscountedPrice(itemsPrice, discount) {
   // we suppose the itemsPrice is an array of objects with filds: item, price
 
+  //validations of params
+  if (!Array.isArray(itemsPrice)) {
+    throw new Error("itemsPrice must be an array.");
+  }
+
+  if (typeof discount !== "number") {
+    throw new Error("Each item must have a 'price' property of type number.");
+  }
+
+  // Validate discount
+  if (typeof discount !== "number") {
+    throw new Error("Discount must be a valid number.");
+  }
+
   const discountedPriceItems = itemsPrice.map((el) => {
     el.price = Number(el.price) - Number(el.price) * (discount / 100);
     return el;
@@ -67,7 +81,10 @@ sorted in alphabetical order, without using explicit loops.
 Use function composition and point-free style.
  */
 
-const st = "qwt reyt ewy twet yw qwt reyt ewy";
+const st = "qwt reyt ewy Ewy EwY twet yw qwt reyt ewy";
+
+// Normalizes case and remove punctuation
+const normalizes = (text) => text.toLowerCase().replace(/\s{2,}/g, " ");
 
 // get text return array split by space
 const splitStr = (text) => text.split(" ");
@@ -85,7 +102,7 @@ const compose =
     fns.reduce((v, f) => f(v), x);
 
 // function composition
-const filterUniqueWords = compose(splitStr, uniqueElem, alphabeticalOrder);
+const filterUniqueWords = compose(normalizes, splitStr, uniqueElem, alphabeticalOrder);
 
 console.log("=========================");
 console.log(filterUniqueWords(st));
