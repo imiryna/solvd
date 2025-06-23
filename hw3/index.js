@@ -81,10 +81,14 @@ sorted in alphabetical order, without using explicit loops.
 Use function composition and point-free style.
  */
 
-const st = "qwt reyt ewy Ewy EwY twet yw qwt reyt ewy";
+const st = "qwt reyt ewy Ewy ,  EwY twet yw qwt reyt ewy";
 
-// Normalizes case and remove punctuation
-const normalizes = (text) => text.toLowerCase().replace(/\s{2,}/g, " ");
+// Normalizes case and remove punctuation, and spaces
+const normalizes = (text) =>
+  text
+    .toLowerCase()
+    .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "")
+    .replace(/\s+/g, " ");
 
 // get text return array split by space
 const splitStr = (text) => text.split(" ");
