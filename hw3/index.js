@@ -39,7 +39,7 @@ function calculateDiscountedPrice(itemsPrice, discount) {
   return discountedPriceItems;
 }
 
-console.log(calculateDiscountedPrice(itemsPrice, 10));
+// console.log(calculateDiscountedPrice(itemsPrice, 10));
 
 /*
 Create a pure function called `calculateTotalPrice` that takes an array of products as an argument. 
@@ -73,7 +73,7 @@ const getFullName = (person) => `${person.firstName} ${person.lastName}`;
 
 // Exemple of using Point-free style
 
-console.log(persons.map(getFullName));
+// console.log(persons.map(getFullName));
 
 /*
 Create a function called 'filterUniqueWords' that takes a string of text and returns an array of unique words, 
@@ -108,8 +108,8 @@ const compose =
 // function composition
 const filterUniqueWords = compose(normalizes, splitStr, uniqueElem, alphabeticalOrder);
 
-console.log("=========================");
-console.log(filterUniqueWords(st));
+// console.log("=========================");
+// console.log(filterUniqueWords(st));
 
 /* 
 Implement a function called 'getAverageGrade' that takes an array of student objects, 
@@ -132,8 +132,8 @@ const average = (arr) => arr.reduce((acc, el) => acc + el, 0) / arr.length;
 
 const getAverageGrade = compose(allGrades, average);
 
-console.log("========== Average Grade ===============");
-console.log(getAverageGrade(students));
+// console.log("========== Average Grade ===============");
+// console.log(getAverageGrade(students));
 
 //  Closures and Higher-Order Functions
 
@@ -142,7 +142,7 @@ Create a function called 'createCounter' that returns a closure.
 The closure should be a counter function that increments the count on each call and returns the updated count. 
 Each closure should have its own independent count. 
 */
-console.log("==========counter closures ===============");
+// console.log("==========counter closures ===============");
 function createCounter() {
   let counter = 0;
 
@@ -179,7 +179,7 @@ const repeatFunction = (fn, times) => {
 const w = (x) => x * x;
 const repeatFn = repeatFunction(w, 3);
 
-console.log(repeatFn(3));
+// console.log(repeatFn(3));
 
 //    Recursion and Tail Call Optimization
 
@@ -201,9 +201,9 @@ function calculateFactorial(num) {
   return factorialTco(num, 1);
 }
 
-console.log("=== Factorial TCO =======");
-console.log(calculateFactorial(10));
-console.log("=========================");
+// console.log("=== Factorial TCO =======");
+// console.log(calculateFactorial(10));
+// console.log("=========================");
 
 /*
 Create a recursive function called power that takes a base and an exponent as arguments. 
@@ -216,7 +216,7 @@ function power(base, exponent) {
   }
   return recPower(base, exponent, 1);
 }
-console.log(power(2, 3));
+// console.log(power(2, 3));
 
 //   Lazy Evaluation and Generators (do not use yield)
 
@@ -247,9 +247,9 @@ function lazyMap(arr, mapFn) {
 
 const it = lazyMap([2, 3], w);
 
-console.log("=== lazy evaluation =======");
-console.log(it.next());
-console.log(it.next());
+// console.log("=== lazy evaluation =======");
+// console.log(it.next());
+// console.log(it.next());
 
 /*
 Create a lazy generator function called fibonacciGenerator that generates Fibonacci numbers one at a time 
@@ -286,10 +286,10 @@ function fibonacciGenerator() {
 
 const sequences = fibonacciGenerator();
 
-console.log("=== fibonacci =======");
-console.log(sequences.next());
-console.log(sequences.next());
-console.log(sequences.next());
-console.log(sequences.next());
-console.log(sequences.next());
-console.log(sequences.next());
+// console.log("=== fibonacci =======");
+// console.log(sequences.next());
+// console.log(sequences.next());
+// console.log(sequences.next());
+// console.log(sequences.next());
+// console.log(sequences.next());
+// console.log(sequences.next());
