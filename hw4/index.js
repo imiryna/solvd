@@ -156,5 +156,82 @@ console.log(bankAccount1.formattedBalance);
 console.log(bankAccount2.formattedBalance);
 
 // =============  Advanced Property Descriptors  ================
+const personTest = {
+  firstName: "John",
+  lastName: "Doe",
+  age: 30,
+  email: "john.doe@example.com",
+  address: {
+    street: "6-AV",
+    apart: 6,
+  },
+  hobbies: ["reading", "swimming"],
+};
 
+function createImmutableObject(obj) {
+  const objNew = { ...obj };
+
+  Object.keys(objNew).forEach((key) => {
+    const a = objNew[key];
+    if (typeof objNew[key] === "object" && !Array.isArray(objNew[key]) && Object.keys(objNew[key]).length !== 0) {
+      objNew[key] = createImmutableObject(objNew[key]);
+    }
+
+    if (Array.isArray(objNew[key])) {
+      objNew[key] = objNew[key].map((element) => {
+        if (typeof element === "object" && Object.keys(element).length !== 0) {
+          element = createImmutableObject(element);
+        }
+        return element;
+      });
+    }
+    Object.defineProperty(objNew, key, {
+      writable: false,
+      enumerable: true,
+    });
+  });
+  return objNew;
+}
 console.log("=========== Advanced Property Descriptors ===========");
+
+personTest.age = 20;
+
+console.log(personTest.age);
+console.log(JSON.stringify(personTest));
+const newPerson = createImmutableObject(personTest);
+// const newPerson = { ...personTest };
+newPerson.age = 666;
+newPerson.address.street = "Baker";
+newPerson.hobbies[0] = "hjgjfjf";
+console.log(JSON.stringify(newPerson));
+
+// =============  Object Observation  ============
+
+function observeObject(obj, fn) {
+  return new Proxy(obj, {
+    get(target, key, receiver) {
+      fn(key, target[key]);
+      return Reflect.get(target, key, receiver);
+    },
+
+    set(target, key, value, receiver) {
+      fn(key, value);
+      return Reflect.set(target, key, value, receiver);
+    },
+  });
+}
+
+const showLogs = (key, value) => {
+  console.log(`Property "${key}" was accessed or changed. Value: ${value}`);
+};
+
+console.log("=========== Object Observation ===========");
+const proxyPerson = observeObject(person, showLogs);
+console.log(proxyPerson.firstName);
+proxyPerson.firstName = "Baka";
+console.log(proxyPerson.firstName);
+
+// ========== Object Deep Cloning  =============
+function deepCloning() {}
+
+console.log("=========== Object Deep Cloning ===========");
