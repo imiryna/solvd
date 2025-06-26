@@ -172,7 +172,6 @@ function createImmutableObject(obj) {
   const objNew = { ...obj };
 
   Object.keys(objNew).forEach((key) => {
-    const a = objNew[key];
     if (typeof objNew[key] === "object" && !Array.isArray(objNew[key]) && Object.keys(objNew[key]).length !== 0) {
       objNew[key] = createImmutableObject(objNew[key]);
     }
@@ -232,6 +231,48 @@ proxyPerson.firstName = "Baka";
 console.log(proxyPerson.firstName);
 
 // ========== Object Deep Cloning  =============
-function deepCloning() {}
+
+function deepCloneObject(value, cache = new WeakMap()) {
+  // check if we already have a object in cache
+  // that mean we have circular ref and we already in it
+  if (cache.has(value)) return cache.get(value);
+
+  // primitive type and function return as it is
+  if (typeof value !== "object" || typeof value === "function") {
+    return value;
+  }
+
+  // Array - map through elements of array with our function
+  if (Array.isArray(value)) return value.map((el) => deepCloneObject(el, cache));
+
+  if (typeof value === "object") {
+    // make clone of object
+    const clone = {};
+    // store it in cache as sample
+    cache.set(value, clone);
+
+    Object.entries(value).forEach(function ([key, val]) {
+      clone[key] = deepCloneObject(val, cache);
+    });
+    return clone;
+  }
+}
+
+const books = {
+  "Deep work": "Cal Newport",
+  "Atomic Habits": "James Clear",
+  a: {
+    b: 1,
+    c: 2,
+  },
+};
 
 console.log("=========== Object Deep Cloning ===========");
+
+let cloneBook = deepCloneObject(books);
+books["Atomic Habits"] = "Some another book";
+console.log(books["Atomic Habits"]);
+console.log(cloneBook["Atomic Habits"]);
+
+console.log(books.a);
+console.log(cloneBook.a);
