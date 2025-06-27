@@ -276,3 +276,68 @@ console.log(cloneBook["Atomic Habits"]);
 
 console.log(books.a);
 console.log(cloneBook.a);
+
+//============== Object Property Validation ===============
+
+function validateObject(user, schema) {
+  //get keys
+  let userKeys = Object.keys(user);
+  const schemaKeys = Object.keys(schema);
+
+  for (const key of schemaKeys) {
+    const field = key;
+    //check whether user includes key
+    //if true - remove it from userKeys
+    if (userKeys.includes(field)) {
+      userKeys = userKeys.filter((key) => key !== field);
+
+      if (typeof schema[key] === "object") {
+        try {
+          validateObject(user[key], schema[key]);
+        } catch (e) {
+          throw new Error(`<${key}>.${e.message}`);
+        }
+      }
+
+      // check type of a field
+      if (typeof user[key] !== "object" && typeof user[key] !== schema[key]) {
+        throw new Error(`<${key}> property should be a <${schema[key]}> type`);
+      }
+    } else {
+      throw new Error(`<${field}> property not presented in object`);
+    }
+  }
+  if (userKeys.length !== 0) {
+    throw new Error(`${userKeys.join(", ")} properties are extra and not presented in schema`);
+  }
+
+  return true;
+}
+
+const user = {
+  name: "Bob",
+  age: 30,
+  email: "qwe123@test.com",
+  pet: {
+    name: "cat",
+    age: 1,
+  },
+};
+
+const userSchema = {
+  name: "string",
+  age: "number",
+  email: "string",
+  pet: {
+    name: "string",
+    age: "string",
+  },
+};
+
+console.log("============= Property Validation ========== ");
+
+try {
+  console.log(validateObject(user, userSchema));
+} catch (e) {
+  console.error(e.message);
+}
