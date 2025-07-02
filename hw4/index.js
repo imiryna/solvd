@@ -43,12 +43,12 @@ Object.defineProperty(person, "address", {
   configurable: false,
 });
 
-console.log("=========== object Manipulation ===========");
-console.log(person);
-console.log(person.firstName);
-person.firstName = "Bob"; // Attempt to change value will be ignored
-console.log(person.firstName);
-console.log(person.address);
+// console.log("=========== object Manipulation ===========");
+// console.log(person);
+// console.log(person.firstName);
+// person.firstName = "Bob"; // Attempt to change value will be ignored
+// console.log(person.firstName);
+// console.log(person.address);
 
 // =============   Object Property Enumeration and Deletion   ==============
 
@@ -103,15 +103,15 @@ function deleteNonConfigurable(obj, propertyKey) {
   delete obj[propertyKey];
 }
 
-console.log("=========== object Enumeration and Deletion ===========");
+// console.log("=========== object Enumeration and Deletion ===========");
 
-console.log(item.price);
-console.log(item.quantity);
-console.log(`we can see just '${Object.keys(item)}' properti`);
-item.price = 20;
-console.log(item.price);
+// console.log(item.price);
+// console.log(item.quantity);
+// console.log(`we can see just '${Object.keys(item)}' properti`);
+// item.price = 20;
+// console.log(item.price);
 
-console.log(getTotalPrice(item));
+// console.log(getTotalPrice(item));
 
 // ============  Object Property Getters and Setters  ===========
 
@@ -146,14 +146,14 @@ const bankAccountTemplate = {
 const bankAccount1 = Object.create(bankAccountTemplate);
 const bankAccount2 = Object.create(bankAccountTemplate);
 
-console.log("=========== Object Property Getters and Setters ===========");
-console.log(bankAccount1.formattedBalance);
-console.log(bankAccount2.formattedBalance);
+// console.log("=========== Object Property Getters and Setters ===========");
+// console.log(bankAccount1.formattedBalance);
+// console.log(bankAccount2.formattedBalance);
 
 bankAccount1.transfer(bankAccount2, 500);
 
-console.log(bankAccount1.formattedBalance);
-console.log(bankAccount2.formattedBalance);
+// console.log(bankAccount1.formattedBalance);
+// console.log(bankAccount2.formattedBalance);
 
 // =============  Advanced Property Descriptors  ================
 const personTest = {
@@ -191,12 +191,13 @@ function createImmutableObject(obj) {
   });
   return objNew;
 }
-console.log("=========== Advanced Property Descriptors ===========");
 
-personTest.age = 20;
+// console.log("=========== Advanced Property Descriptors ===========");
 
-console.log(personTest.age);
-console.log(JSON.stringify(personTest));
+// personTest.age = 20;
+
+// console.log(personTest.age);
+// console.log(JSON.stringify(personTest));
 const newPerson = createImmutableObject(personTest);
 // const newPerson = { ...personTest };
 newPerson.age = 666;
@@ -221,14 +222,14 @@ function observeObject(obj, fn) {
 }
 
 const showLogs = (key, value) => {
-  console.log(`Property "${key}" was accessed or changed. Value: ${value}`);
+  //   console.log(`Property "${key}" was accessed or changed. Value: ${value}`);
 };
 
-console.log("=========== Object Observation ===========");
-const proxyPerson = observeObject(person, showLogs);
-console.log(proxyPerson.firstName);
-proxyPerson.firstName = "Baka";
-console.log(proxyPerson.firstName);
+// console.log("=========== Object Observation ===========");
+// const proxyPerson = observeObject(person, showLogs);
+// console.log(proxyPerson.firstName);
+// proxyPerson.firstName = "Baka";
+// console.log(proxyPerson.firstName);
 
 // ========== Object Deep Cloning  =============
 
@@ -267,15 +268,15 @@ const books = {
   },
 };
 
-console.log("=========== Object Deep Cloning ===========");
+// console.log("=========== Object Deep Cloning ===========");
 
-let cloneBook = deepCloneObject(books);
-books["Atomic Habits"] = "Some another book";
-console.log(books["Atomic Habits"]);
-console.log(cloneBook["Atomic Habits"]);
+// let cloneBook = deepCloneObject(books);
+// books["Atomic Habits"] = "Some another book";
+// console.log(books["Atomic Habits"]);
+// console.log(cloneBook["Atomic Habits"]);
 
-console.log(books.a);
-console.log(cloneBook.a);
+// console.log(books.a);
+// console.log(cloneBook.a);
 
 //============== Object Property Validation ===============
 
@@ -334,10 +335,10 @@ const userSchema = {
   },
 };
 
-console.log("============= Property Validation ========== ");
+// console.log("============= Property Validation ========== ");
 
-try {
-  console.log(validateObject(user, userSchema));
-} catch (e) {
-  console.error(e.message);
-}
+// try {
+//   console.log(validateObject(user, userSchema));
+// } catch (e) {
+//   console.error(e.message);
+// }
