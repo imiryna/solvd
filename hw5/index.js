@@ -57,14 +57,17 @@ console.log(JSON.stringify(aa));
 
 //Optimize the chunkArray function to minimize memory usage while chunking the array.
 
-// array.splice() allows to avoid holding all chunks in memory at once
+// array.splice() allows to avoid holding all chunks in memory
 
 function chunkArraySplice(arr, x) {
-  const copy = [...arr]; // but we're still hold copy array in memory
+  // here the only cons of an approach - we hold a copy
+  // an array in memory, to avoid origin array destruction
+
+  const copy = [...arr];
   const result = [];
 
   while (copy.length > 0) {
-    result.push(copy.splice(0, x)); // removes from arr and avoids copying
+    result.push(copy.splice(0, x));
   }
 
   return result;
@@ -72,7 +75,8 @@ function chunkArraySplice(arr, x) {
 
 console.log("===== use splice ====");
 console.log(JSON.stringify(chunkArraySplice(numbers, 3)));
-//  we avoids holding all chunks in memory at once
+
+//  we avoids holding all chunks in memory at once cause we use generator
 
 function* chunkArrayOptimize(arr, x) {
   for (let i = 0; i < arr.length; i += x) {
@@ -85,3 +89,36 @@ for (const x of chunkArrayOptimize(numbers, 3)) {
 }
 
 //============ Array Shuffling ============
+
+const cards = ["Q", 1, 2, 3, 4, 5, "S", "R", "T"];
+function customShuffle(arg) {
+  const a = [...arg];
+  return a.sort(() => Math.random() - 0.5);
+}
+
+console.log("====== Array shuffling =======");
+console.log(customShuffle(cards));
+console.log(customShuffle(cards));
+console.log(customShuffle(cards));
+
+// ===== Fisher-Yates algorithm =======
+
+function arrayShuffle(array) {
+  const copy = [...array];
+
+  for (let i = copy.length - 1; i > 0; i--) {
+    const randomIndex = Math.floor(Math.random() * (i + 1));
+    [copy[i], copy[randomIndex]] = [copy[randomIndex], copy[i]];
+  }
+  return copy;
+}
+
+console.log("====== Fisher-Yates =====");
+console.log(`The origin arrey ${cards}`);
+
+// testing seweral time
+
+for (let i = 0; i < 9; i++) {
+  const s = arrayShuffle(cards);
+  console.log(` ${i + 1}:`, s);
+}
