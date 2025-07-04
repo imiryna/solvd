@@ -57,18 +57,31 @@ console.log(JSON.stringify(aa));
 
 //Optimize the chunkArray function to minimize memory usage while chunking the array.
 
-// function chunkArrayOptimize(arr, x) {
-//   let result = [];
+// array.splice() allows to avoid holding all chunks in memory at once
 
-//   for (let i = 0; i < arr.length; i += x) {
-//     const chunk = arr.slice(i, i + x);
-//     result.push(chunk);
-//   }
+function chunkArraySplice(arr, x) {
+  const copy = [...arr]; // but we're still hold copy array in memory
+  const result = [];
 
-//   return result;
-// }
+  while (copy.length > 0) {
+    result.push(copy.splice(0, x)); // removes from arr and avoids copying
+  }
 
-// let ff = chunkArrayOptimize(numbers, x);
-// console.log(JSON.stringify(ff));
+  return result;
+}
+
+console.log("===== use splice ====");
+console.log(JSON.stringify(chunkArraySplice(numbers, 3)));
+//  we avoids holding all chunks in memory at once
+
+function* chunkArrayOptimize(arr, x) {
+  for (let i = 0; i < arr.length; i += x) {
+    yield arr.slice(i, i + x);
+  }
+}
+console.log("===== use Generators ====");
+for (const x of chunkArrayOptimize(numbers, 3)) {
+  console.log(x);
+}
 
 //============ Array Shuffling ============
