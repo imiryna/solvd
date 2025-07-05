@@ -118,7 +118,32 @@ console.log(`The origin arrey ${cards}`);
 
 // testing seweral time
 
-for (let i = 0; i < 9; i++) {
+for (let i = 0; i < 4; i++) {
   const s = arrayShuffle(cards);
-  console.log(` ${i + 1}:`, s);
+  console.log(s);
 }
+
+// ====== Array Intersection ======
+
+const arrA = [1, 3, 4, 5];
+const arrB = [1, 2, 5, 6, 7];
+
+function getArrayIntersection(x, y) {
+  const intersection = x.filter((el) => y.includes(el));
+  return intersection;
+}
+console.log("=======Intersection ======");
+console.log(getArrayIntersection(arrA, arrB));
+
+// ====== Array Union ======
+
+function getArrayUnion(a, b) {
+  const arrWithoutDuplications = [...new Set([...a, ...b])];
+  return arrWithoutDuplications;
+}
+console.log("======= Union ======");
+console.log(getArrayUnion(arrA, arrB));
+
+// ===== Array Performance Analysis =====
+
+function measureArrayPerformance(arr, fn) {}
