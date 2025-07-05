@@ -1,20 +1,26 @@
 // ====== Advanced Array Filtering ======
 
 function customFilterUnique(value, fn) {
-  const arr = [];
-  console.log(arr);
-  //   const result = [];
+  const result = [];
 
   for (const el of value) {
-    // const element = fn(el);
-
     //check el on unique
-    // if (!arr.has(el)) {
-    //   arr.add(el);
-    // }
-    if (fn(el)) arr.push(el);
+    if (fn(el) && !result.includes(el)) {
+      result.push(el);
+    }
   }
-  return arr;
+  return result;
+}
+
+function customFilterUnique2(arr, getKey) {
+  const seen = new Set();
+
+  return arr.filter((item) => {
+    const key = getKey(item);
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
 }
 const numbers = [1, 2, 3, 4, 4, 1, 3, 5];
 const people = [
@@ -26,12 +32,18 @@ const people = [
     name: "Iryna",
     age: 42,
   },
+  {
+    name: "Iryna",
+    age: 345,
+  },
 ];
 // const arrayFiltered = (el) => el >= 3;
 const arrayFiltered = (el) => el.age >= 38;
 
-const a = customFilterUnique(people, arrayFiltered);
-// console.log(a);
+const a = customFilterUnique(numbers, arrayFiltered);
+const c = customFilterUnique(people, arrayFiltered);
+console.log(a);
+console.log(JSON.stringify(customFilterUnique2(people, (person) => `${person.name}-${person.age}`)));
 // console.log(numbers.filter((el) => el >= 3));
 
 // ======= Array Chunking ========
@@ -146,4 +158,16 @@ console.log(getArrayUnion(arrA, arrB));
 
 // ===== Array Performance Analysis =====
 
-function measureArrayPerformance(arr, fn) {}
+function measureArrayPerformance(arr, fn) {
+  const start = performance.now();
+
+  const result = fn(arr);
+
+  const end = performance.now();
+  console.log(`== Execution time: ${end - start.toFixed(2)} ms ==`);
+
+  return result;
+}
+
+const d = measureArrayPerformance(cards, arrayShuffle);
+console.log(d);
