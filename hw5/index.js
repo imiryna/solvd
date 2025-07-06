@@ -164,10 +164,19 @@ function measureArrayPerformance(arr, fn) {
   const result = fn(arr);
 
   const end = performance.now();
-  console.log(`== Execution time: ${end - start.toFixed(2)} ms ==`);
 
-  return result;
+  return {
+    time: end.toFixed(4) - start.toFixed(4),
+  };
 }
 
 const d = measureArrayPerformance(cards, arrayShuffle);
-console.log(d);
+console.log(JSON.stringify(d));
+const test = [42, 87, 13, 56, 95, 61, 7, 19, 83, 23, 100, 36, 78, 11, 91, 50, 35, 3, 67, 71, 99, 26, 89, 8, 39, 59, 73, 21, 16, 18, 97, 66, 84, 63, 47, 53, 41, 6, 25, 58, 2, 32, 94, 1, 40, 22, 75, 70, 20, 15, 10, 43, 85, 24, 45, 68, 5, 14, 46, 12, 81, 28, 4, 37, 90, 17, 64, 38, 34, 30, 92, 44, 33, 9, 29, 80, 76, 27, 62, 60, 55, 79, 93, 31, 98, 86, 49, 65, 57, 100, 48, 51, 96, 77, 74, 52, 69, 88, 72, 54, 82, 35, 83, 59, 43, 90, 27, 2, 48, 67, 95, 76, 31, 21, 5, 33, 66, 18, 14, 87, 58, 63, 70, 28, 7, 80, 44, 40, 36, 16, 25, 4, 55, 42, 19, 1, 8, 23, 38, 99, 60, 29, 91, 30, 11, 73, 3, 53, 6, 32, 46, 17, 39, 10, 22, 61, 9, 24, 26, 56, 12, 13, 20, 74, 64, 47, 84, 41, 85, 100, 50, 69, 82, 86, 97, 71, 45, 68, 15, 34, 57, 49, 37, 78, 92, 94, 93, 98, 65, 51, 62, 77, 96, 89, 88, 72, 75, 79];
+console.log("============");
+const ffMap = measureArrayPerformance(test, (arr) => arr.map((el) => el + 1));
+console.log(JSON.stringify(ffMap));
+const ffFilter = measureArrayPerformance(test, (arr) => arr.filter((el) => el % 2 === 0));
+console.log(JSON.stringify(ffFilter));
+const ffReduce = measureArrayPerformance(test, (arr) => arr.reduce((accumulator, currentValue) => accumulator + currentValue, 0));
+console.log(JSON.stringify(ffReduce));
