@@ -71,3 +71,27 @@ console.log(multiline`
     function add(a, b) {
     return a + b;
     }`);
+
+// ====== Debounce Function =======
+
+function inputData(query) {
+  console.log("Data Fetched: ", query, " at ", new Date().toISOString());
+}
+
+function debounce(func, delay) {
+  let timer;
+
+  return function (...rest) {
+    // clean previous timer
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      func.apply(this, rest);
+    }, delay);
+  };
+}
+const debouncedInput = debounce(inputData, 1000);
+
+debouncedInput("First");
+setTimeout(() => debouncedInput("Second"), 200);
+setTimeout(() => debouncedInput("Third"), 400);
+setTimeout(() => debouncedInput("Final"), 1200);
