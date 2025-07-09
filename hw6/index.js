@@ -1,3 +1,5 @@
+// ===== Quasi-Tagged Templates ========
+
 const translations = {
   en: {
     greet: "Hello",
@@ -30,3 +32,23 @@ const localizedIntroduction = localize`${introduction}`;
 
 console.log(localizedGreeting);
 console.log(localizedIntroduction);
+
+// ========== Advanced Tagged Template ============
+
+const keywords = ["JavaScript", "template", "tagged"];
+const template = "Learn ${0} tagged templates to create custom ${1} literals for ${2} manipulation.";
+
+function highlightKeywords(str, arr) {
+  let templateStr = str;
+
+  arr.forEach((item, i) => {
+    templateStr = templateStr.replace(`\${${i}}`, `<span class='highlight'>${item}</span>`);
+  });
+
+  return templateStr;
+}
+const d = highlightKeywords(template, keywords);
+
+console.log(d);
+console.log(template);
+console.log(keywords);
