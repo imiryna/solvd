@@ -14,9 +14,11 @@ const translations = {
 function localize(strings, ...values) {
   // take part of dictionary with specified language
   let localTranslation = translations[language];
+
   return strings.reduce((acc, str, i) => {
     //translate the string literals if they are presented, or add '' to result string
     const translatedStr = localTranslation[str] || str;
+
     // translate interpolated values if its presented in dictionary
     const translatedValue = localTranslation[values[i]] || "";
     return acc + translatedStr + (translatedValue || "");
@@ -48,7 +50,24 @@ function highlightKeywords(str, arr) {
   return templateStr;
 }
 const d = highlightKeywords(template, keywords);
-
+console.log("=================");
 console.log(d);
 console.log(template);
 console.log(keywords);
+
+// ========= Multiline Tagged Template =========
+
+function multiline(code) {
+  const temp = code.toString().split("\n");
+
+  return temp.reduce((acc, item, i) => {
+    if (i === 0) return (acc += "// Expected: \n");
+    return acc + `// ${i}${item} \n`;
+  }, "");
+}
+
+console.log("=================");
+console.log(multiline`
+    function add(a, b) {
+    return a + b;
+    }`);
