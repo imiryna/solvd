@@ -81,6 +81,7 @@ function inputData(query) {
 function debounce(func, delay) {
   let timer;
 
+  // Returning a func
   return function (...rest) {
     // clean previous timer
     clearTimeout(timer);
@@ -92,6 +93,60 @@ function debounce(func, delay) {
 const debouncedInput = debounce(inputData, 1000);
 
 debouncedInput("First");
+console.log("=================");
 setTimeout(() => debouncedInput("Second"), 200);
 setTimeout(() => debouncedInput("Third"), 400);
 setTimeout(() => debouncedInput("Final"), 1200);
+
+// ===== Throttle Function =======
+
+function onScroll(event) {
+  // Handle scroll event
+  console.log("Scroll event:", event);
+}
+
+function throttle(func, interval) {
+  let timerFlag = false; // Variable to keep track of the timer
+
+  // Returning a throttled version
+  return (...args) => {
+    // If there is no timer currently running execute func
+    if (!timerFlag) {
+      func.apply(this, args);
+      timerFlag = true;
+
+      timerFlag = setTimeout(() => {
+        timerFlag = false; // Clear the timerFlag to allow the main function to be executed again
+      }, interval);
+    }
+  };
+}
+
+const throttledScrollHandler = throttle(onScroll, 1000);
+
+throttledScrollHandler("First");
+console.log("======= Throttle ==========");
+setTimeout(() => throttledScrollHandler("Second"), 200);
+setTimeout(() => throttledScrollHandler("Third"), 400);
+setTimeout(() => throttledScrollHandler("Final"), 1200);
+
+// =========== Currying Function Implementation ==============
+
+function curry(func, arity) {
+  if (typeof func !== "function") {
+    throw new Error("Curry requires a function argument");
+  }
+  return function curried(...args) {
+    if (args.length >= arity) {
+      try {
+        return func.apply(this, args);
+      } catch (error) {
+        throw new Error(`Error executing curried function: ${error.message}`);
+      }
+    } else {
+      return func(...nextArgs);
+    }
+
+    return curried(...args, ...nextArgs);
+  };
+}
