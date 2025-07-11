@@ -153,7 +153,7 @@ function curry(func, arity = func.length) {
   }
 
   return function curried(...args) {
-    console.log("args: ", args); // for
+    console.log("args: ", args); // for debuging
     const hasPlaceholder = args.some((arg) => arg == _);
 
     if (!hasPlaceholder && args.length >= arity) {
@@ -165,35 +165,13 @@ function curry(func, arity = func.length) {
     }
 
     return function next(...moreArgs) {
-      console.log("moreArgs: ", moreArgs);
+      console.log("moreArgs: ", moreArgs); // for debuging
       const combinedArgs = args.map((arg) => (arg === curry.placeholder && moreArgs.length ? moreArgs.shift() : arg)).concat(moreArgs);
       return curried(...combinedArgs);
     };
   };
 }
 const _ = Symbol("placeholder");
-
-// function curry(func, arity = func.length) {
-//   if (typeof func !== "function") {
-//     throw new Error("Curry requires a function argument");
-//   }
-
-//   return function curried(...args) {
-//     const hasPlaceholder = args.some((arg) => arg == _);
-
-//     if (!hasPlaceholder && args.length >= arity) {
-//       try {
-//         return func.apply(this, args);
-//       } catch (error) {
-//         throw new Error(`Error executing curried function: ${error.message}`);
-//       }
-//     }
-
-//     return function next(...moreArgs) {
-//       return curried.apply(this, mergeArgs(args, moreArgs));
-//     };
-//   };
-// }
 
 curry.placeholder = _;
 function add(a, b, c) {
