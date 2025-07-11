@@ -132,21 +132,78 @@ setTimeout(() => throttledScrollHandler("Final"), 1200);
 
 // =========== Currying Function Implementation ==============
 
-function curry(func, arity) {
+function mergeArgs(args, moreArgs) {
+  let result = [];
+  const rest = [...moreArgs]; // avoid mutating the original
+
+  args.forEach((arg, idx) => {
+    if (arg === _) {
+      result.push(moreArgs.shift());
+    } else {
+      result.push(arg);
+    }
+  });
+
+  return [...result, ...moreArgs];
+}
+
+function curry(func, arity = func.length) {
   if (typeof func !== "function") {
     throw new Error("Curry requires a function argument");
   }
+
   return function curried(...args) {
-    if (args.length >= arity) {
+    console.log("args: ", args); // for
+    const hasPlaceholder = args.some((arg) => arg == _);
+
+    if (!hasPlaceholder && args.length >= arity) {
       try {
         return func.apply(this, args);
       } catch (error) {
         throw new Error(`Error executing curried function: ${error.message}`);
       }
-    } else {
-      return func(...nextArgs);
     }
 
-    return curried(...args, ...nextArgs);
+    return function next(...moreArgs) {
+      console.log("moreArgs: ", moreArgs);
+      const combinedArgs = args.map((arg) => (arg === curry.placeholder && moreArgs.length ? moreArgs.shift() : arg)).concat(moreArgs);
+      return curried(...combinedArgs);
+    };
   };
 }
+const _ = Symbol("placeholder");
+
+// function curry(func, arity = func.length) {
+//   if (typeof func !== "function") {
+//     throw new Error("Curry requires a function argument");
+//   }
+
+//   return function curried(...args) {
+//     const hasPlaceholder = args.some((arg) => arg == _);
+
+//     if (!hasPlaceholder && args.length >= arity) {
+//       try {
+//         return func.apply(this, args);
+//       } catch (error) {
+//         throw new Error(`Error executing curried function: ${error.message}`);
+//       }
+//     }
+
+//     return function next(...moreArgs) {
+//       return curried.apply(this, mergeArgs(args, moreArgs));
+//     };
+//   };
+// }
+
+curry.placeholder = _;
+function add(a, b, c) {
+  return a + b + c;
+}
+
+const curriedAdd = curry(add);
+
+console.log(curriedAdd(_, _, _)(1)(2)(3));
+console.log(curriedAdd(_, 2, 3)(1));
+console.log(curriedAdd(1, 2)(3));
+console.log(curriedAdd(1)(2, 3));
+console.log(curriedAdd(1, 2, 3));
