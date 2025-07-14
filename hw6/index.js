@@ -32,8 +32,8 @@ const introduction = "intro";
 const localizedGreeting = localize`${greeting}`;
 const localizedIntroduction = localize`${introduction}`;
 
-console.log(localizedGreeting);
-console.log(localizedIntroduction);
+// console.log(localizedGreeting);
+// console.log(localizedIntroduction);
 
 // ========== Advanced Tagged Template ============
 
@@ -50,10 +50,10 @@ function highlightKeywords(str, arr) {
   return templateStr;
 }
 const d = highlightKeywords(template, keywords);
-console.log("=================");
-console.log(d);
-console.log(template);
-console.log(keywords);
+// console.log("=================");
+// console.log(d);
+// console.log(template);
+// console.log(keywords);
 
 // ========= Multiline Tagged Template =========
 
@@ -66,11 +66,11 @@ function multiline(code) {
   }, "");
 }
 
-console.log("=================");
-console.log(multiline`
-    function add(a, b) {
-    return a + b;
-    }`);
+// console.log("=================");
+// console.log(multiline`
+// function add(a, b) {
+// return a + b;
+// }`);
 
 // ====== Debounce Function =======
 
@@ -93,7 +93,7 @@ function debounce(func, delay) {
 const debouncedInput = debounce(inputData, 1000);
 
 debouncedInput("First");
-console.log("=================");
+// console.log("=================");
 setTimeout(() => debouncedInput("Second"), 200);
 setTimeout(() => debouncedInput("Third"), 400);
 setTimeout(() => debouncedInput("Final"), 1200);
@@ -125,7 +125,7 @@ function throttle(func, interval) {
 const throttledScrollHandler = throttle(onScroll, 1000);
 
 throttledScrollHandler("First");
-console.log("======= Throttle ==========");
+// console.log("======= Throttle ==========");
 setTimeout(() => throttledScrollHandler("Second"), 200);
 setTimeout(() => throttledScrollHandler("Third"), 400);
 setTimeout(() => throttledScrollHandler("Final"), 1200);
@@ -180,8 +180,8 @@ function add(a, b, c) {
 
 const curriedAdd = curry(add);
 
-console.log(curriedAdd(_, _, _)(1)(2)(3));
-console.log(curriedAdd(_, 2, 3)(1));
-console.log(curriedAdd(1, 2)(3));
-console.log(curriedAdd(1)(2, 3));
-console.log(curriedAdd(1, 2, 3));
+// console.log(curriedAdd(_, _, _)(1)(2)(3));
+// console.log(curriedAdd(_, 2, 3)(1));
+// console.log(curriedAdd(1, 2)(3));
+// console.log(curriedAdd(1)(2, 3));
+// console.log(curriedAdd(1, 2, 3));
