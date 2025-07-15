@@ -1,24 +1,12 @@
-//====== promiseAll Function ====
+//====== promiseAll Function ========
 
-const { rejects } = require("assert");
-const { resolve } = require("path");
+function promiseAll(value) {
+  return Promise.all(value.map((res) => Promise.resolve(res)));
+}
 
-const promiseAll = (value, delay, shouldReject = false) => {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      //setTimeout to simulate asynchronous operation
-      if (shouldReject) {
-        reject(value);
-      } else {
-        resolve(value);
-      }
-    }, delay);
-  });
-};
-// const promises = [promiseAll(1, 500, true), promiseAll(2, 1000), promiseAll(3, 1500)];
-const promises = [promiseAll(1, 500), promiseAll(2, 200), promiseAll(3, 1500)];
+const promises = [Promise.resolve(1), Promise.resolve(2), Promise.resolve(3)];
 
-Promise.all(promises)
+promiseAll(promises)
   .then((results) => {
     console.log("All promises resolved:", results); // Expected: [1, 2, 3]
   })
@@ -42,9 +30,20 @@ const promisess = [Promise.resolve(1), Promise.reject("Error occurred"), Promise
 promiseAllSettled(promisess).then((results) => {
   console.log("All promises settled:", results);
   results.forEach((result, index) => {
-    console.log(`Promise ${index + 1}:`, result);
+    console.log(index + 1, result);
   });
   // Expected: [{ status: 'fulfilled', value: 1 },
   //            { status: 'rejected', reason: 'Error occurred' },
   //            { status: 'fulfilled', value: 3 }]
 });
+
+/*
+1. Сортування обміном
+2. Знайти перше входженння даного елемента в масив (повернути індекс, якщо такого немає то -1)
+3. Знайти останнє входження
+4. Перевірити рядок на паліндром
+5*. Знайти найдовшу підрядок символів що не повторяються в рядку (тобто нема двох однакових поруч)
+*/
+const arr = [];
+
+const arr2 = new Array();
