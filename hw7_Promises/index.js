@@ -37,13 +37,73 @@ promiseAllSettled(promisess).then((results) => {
   //            { status: 'fulfilled', value: 3 }]
 });
 
-/*
-1. Сортування обміном
-2. Знайти перше входженння даного елемента в масив (повернути індекс, якщо такого немає то -1)
-3. Знайти останнє входження
-4. Перевірити рядок на паліндром
-5*. Знайти найдовшу підрядок символів що не повторяються в рядку (тобто нема двох однакових поруч)
-*/
 const arr = [];
 
 const arr2 = new Array();
+
+//========= Chaining of Promises as a Separate Function =======
+
+function asyncFunction1() {
+  return Promise.resolve("Result from asyncFunction1");
+}
+
+function asyncFunction2(data) {
+  return Promise.resolve(data + " - Result from asyncFunction2");
+}
+
+function asyncFunction3(data) {
+  return Promise.resolve(data + " - Result from asyncFunction3");
+}
+
+const functionsArray = [asyncFunction1, asyncFunction2, asyncFunction3];
+
+function chainPromises(functionsArray) {
+  return functionsArray.reduce((acc, curr) => {
+    return acc.then(curr);
+  }, Promise.resolve());
+}
+
+chainPromises(functionsArray)
+  .then((result) => {
+    console.log("Chained promise result:", result);
+    // Expected: "Result from asyncFunction1 - Result from asyncFunction2 - Result from asyncFunction3"
+  })
+  .catch((error) => {
+    console.error("Chained promise error:", error);
+  });
+
+// ======= promisify Function ======
+
+function callbackStyleFunction(value, callback) {
+  setTimeout(() => {
+    if (value > 0) {
+      callback(null, value * 2);
+    } else {
+      callback("Invalid value", null);
+    }
+  }, 1000);
+}
+
+function promisify(fn) {
+  return function (...args) {
+    return new Promise((resolve, reject) => {
+      fn(...args, (err, result) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(result);
+        }
+      });
+    });
+  };
+}
+
+const promisedFunction = promisify(callbackStyleFunction);
+
+promisedFunction(8)
+  .then((result) => {
+    console.log("Promised function result:", result); // Expected: 6
+  })
+  .catch((error) => {
+    console.error("Promised function error:", error);
+  });
