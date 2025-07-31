@@ -10,5 +10,5 @@ function doubleArray(a) {
   }
   return newAr;
 }
-const w = doubleArray(arr);
-console.log(w);
+const we = doubleArray(arr);
+console.log(we);
