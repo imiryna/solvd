@@ -43,10 +43,10 @@ const book1 = new FictionBook("Some Book", "J.J.Pack", "9876543210", 9.99, true,
 const book2 = new Book("Some Old Book", "Mike Brams", "23423562436", 15.45, true);
 const book3 = new NonFictionBook("Some New Book", "Killian Huge", "6545633455", 21.2, true, "Math");
 
-console.log(book);
-console.log(book1);
-console.log(book2);
-console.log(book3);
+// console.log(book);
+// console.log(book1);
+// console.log(book2);
+// console.log(book3);
 
 // User class. According to tech spec
 class User {
@@ -58,7 +58,7 @@ class User {
 
   // example of method. Print the full information about User
   businessCard() {
-    console.log(`Name: ${this.name} \nEmail: ${this.email}`);
+    // console.log(`Name: ${this.name} \nEmail: ${this.email}`);
   }
 }
 
@@ -116,9 +116,9 @@ class Cart {
 // instance of Cart class for the User <bob>
 const cart = new Cart(bob);
 // print initial state of the cart - empty
-console.log("======  Cart empty ==========");
-console.log(JSON.stringify(cart, null, 2));
-console.log(`TotalPrice: ${cart.getTotalPrice()}`);
+// console.log("======  Cart empty ==========");
+// console.log(JSON.stringify(cart, null, 2));
+// console.log(`TotalPrice: ${cart.getTotalPrice()}`);
 
 // add several books
 cart.addBook(book);
@@ -126,17 +126,17 @@ cart.addBook(book1);
 cart.addBook(book2);
 
 // show that books are in the cart
-console.log("======  Cart 3 books ==========");
-console.log(JSON.stringify(cart, null, 2));
-console.log(`TotalPrice: ${cart.getTotalPrice()}`);
+// console.log("======  Cart 3 books ==========");
+// console.log(JSON.stringify(cart, null, 2));
+// console.log(`TotalPrice: ${cart.getTotalPrice()}`);
 
 // remove one of the books from the cart
 cart.removeBook(book1);
 
 // show that it was removed from the cart
-console.log("======  Cart 2 books ==========");
-console.log(JSON.stringify(cart, null, 2));
-console.log(`TotalPrice: ${cart.getTotalPrice()}`);
+// console.log("======  Cart 2 books ==========");
+// console.log(JSON.stringify(cart, null, 2));
+// console.log(`TotalPrice: ${cart.getTotalPrice()}`);
 
 // ======= Order ====
 // Order class. Take instance of the Cart Class as input value.
@@ -174,9 +174,9 @@ class Order {
 
 // instance of the order based on Bob's cart
 const order = new Order(cart);
-console.log("====== Order ==========");
+// console.log("====== Order ==========");
 // print the order summary
-console.log(JSON.stringify(order.getOrderSummary(), null, 2));
+// console.log(JSON.stringify(order.getOrderSummary(), null, 2));
 
 // ==== Bonus section =====
 
@@ -190,5 +190,5 @@ function searchBooks(value, books) {
 }
 
 const books = [book, book1, book2, book3];
-console.log("========== searchBooks ==============");
-console.log(JSON.stringify(searchBooks("mike", books), null, 2));
+// console.log("========== searchBooks ==============");
+// console.log(JSON.stringify(searchBooks("mike", books), null, 2));
