@@ -52,9 +52,9 @@ stack.push(2);
 stack.push(3);
 stack.push(5);
 
-console.log(stack.peek());
-console.log(stack.pop());
-console.log(stack.isEmpty());
+// console.log(stack.peek());
+// console.log(stack.pop());
+// console.log(stack.isEmpty());
 stack.itemsShow();
 
 // ==== class for a queue ===
@@ -124,10 +124,10 @@ q.enqueue(3);
 q.enqueue(1);
 q.enqueue(4);
 q.enqueue(1);
-q.enqueue(5);
-console.log(q.dequeue());
-console.log(q.peek());
-console.log(JSON.stringify(q));
+// q.enqueue(5);
+// console.log(q.dequeue());
+// console.log(q.peek());
+// console.log(JSON.stringify(q));
 
 // ==== Binary Tree =====
 
@@ -299,15 +299,15 @@ root.add(9);
 // Print the tree
 printTree(root.root);
 
-console.log(root.search(5));
-console.log(root.search(6));
+// console.log(root.search(5));
+// console.log(root.search(6));
 
-console.log(root.inOrder());
-console.log(root.preOrder());
-console.log(root.postOrder());
+// console.log(root.inOrder());
+// console.log(root.preOrder());
+// console.log(root.postOrder());
 
-console.log("==== BST validation =====");
-console.log("Given BST is valid? ", root.isBSTValid());
+// console.log("==== BST validation =====");
+// console.log("Given BST is valid? ", root.isBSTValid());
 
 // ======= Linked List =======
 
@@ -386,9 +386,9 @@ myCoolList.add(9);
 myCoolList.add(123);
 
 // myCoolList.getLast().next = myCoolList.head;
-console.log("===================");
+// console.log("===================");
 
-console.log(`Cycle: ${myCoolList.detectCycle()}`);
+// console.log(`Cycle: ${myCoolList.detectCycle()}`);
 
 // console.log(JSON.stringify(myCoolList));
 // console.log(myCoolList.getLast());
@@ -520,7 +520,7 @@ g.addEdge("C", "F");
 
 g.printGraph();
 
-console.log(g.dfs("E"));
+// console.log(g.dfs("E"));
 
 // =====  Implement Min/Max Stack ======
 //time complexity of O(1).
@@ -575,13 +575,13 @@ class MaxStack {
 }
 
 const st = new MaxStack();
-console.log("===========Max stk=============");
+// console.log("===========Max stk=============");
 st.push(2);
 st.push(3);
 st.pop();
-console.log(st.getMax(), " ");
+// console.log(st.getMax(), " ");
 st.push(1);
-console.log(st.getMax(), " ");
+// console.log(st.getMax(), " ");
 
 // time complexity of O(1).
 class MinStack {
@@ -630,8 +630,8 @@ minStack.push(19);
 minStack.push(29);
 minStack.push(15);
 minStack.push(16);
-console.log("======= Min stack =========");
-console.log(minStack.getMin());
+// console.log("======= Min stack =========");
+// console.log(minStack.getMin());
 
 // =========
 
@@ -733,5 +733,5 @@ gw.addEdge("D", "C", 6);
 gw.addEdge("C", "F", 11);
 
 gw.printGraph();
-console.log("======= dijkstra ====");
-console.log(JSON.stringify(gw.dijkstra("A")));
+// console.log("======= dijkstra ====");
+// console.log(JSON.stringify(gw.dijkstra("A")));
