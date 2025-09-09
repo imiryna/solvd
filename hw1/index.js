@@ -1,4 +1,3 @@
-//
 //Create a function doubleArray(arr) that returns a new array where every number is doubled.
 const arr = [1, 2, 3, 4];
 
