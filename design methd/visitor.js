@@ -1,3 +1,5 @@
+const { captureRejectionSymbol } = require("events");
+
 // The Element interface
 class Element {
   accept(visitor) {
@@ -50,4 +52,28 @@ class ConcreteVisitor extends Visitor {
     console.log(`Visiting ${element.operationB()}`);
     // Do something with ElementB
   }
+}
+
+class Fd {
+  constructor() {
+    this.name = "Bob";
+  }
+}
+
+const person = new Fd();
+
+console.log(person.name);
+
+class OldCalculator {
+  constructor() {}
+  operations = function (term1, term2, operation) {
+    switch (operation) {
+      case "add":
+        return term1 + term2;
+      case "sub":
+        return term1 - term2;
+      default:
+        return NaN;
+    }
+  };
 }
